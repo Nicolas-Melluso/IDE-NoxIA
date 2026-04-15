@@ -2,6 +2,8 @@
 
 Construyendo un IDE web
 
+<img width="2559" height="1331" alt="image" src="https://github.com/user-attachments/assets/91519324-edb6-495f-ba96-ecc710840de6" />
+
 ## Que hace
 
 - Modo web: un editor tipo IDE a la izquierda y un chat LLM a la derecha.
