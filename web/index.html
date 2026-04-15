@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Generation Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="traffic-lights">
+        <span class="dot red"></span>
+        <span class="dot amber"></span>
+        <span class="dot green"></span>
+      </div>
+      <div class="topbar-title">IDE NoxIA to test LLM</div>
+      <div class="topbar-status">IDE + LLM Product Demo</div>
+    </header>
+
+    <main class="workspace">
+      <section class="editor-pane card">
+        <div class="editor-main">
+          <div class="editor-toolbar">
+            <div class="editor-meta">
+              <span id="lineCount">1 linea</span>
+              <span id="charCount">0 caracteres</span>
+            </div>
+            <div class="editor-actions">
+              <button id="clearEditorBtn" class="ghost-btn" type="button">Limpiar</button>
+              <button id="seedCodeBtn" class="ghost-btn" type="button">Cargar ejemplo</button>
+            </div>
+          </div>
+
+          <div class="editor-surface">
+            <div id="lineNumbers" class="line-numbers">1</div>
+            <textarea id="editorInput" spellcheck="false" placeholder="Escribe codigo o texto aqui. Luego usa el chat para pedir explicaciones, refactors, resúmenes o mejoras."></textarea>
+          </div>
+
+          <div class="editor-footer">
+            <span>TypeScript</span>
+            <span>UTF-8</span>
+            <span>GitHub Models</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="chat-pane card">
+        <div class="chat-header">
+          <div>
+            <p class="eyebrow">Asistente</p>
+            <h1>Chat contextual</h1>
+          </div>
+          <button id="clearChatBtn" class="ghost-btn" type="button">Nueva sesión</button>
+        </div>
+
+        <div id="chatMessages" class="chat-messages">
+          <article class="message assistant">
+            <div class="message-role">IA</div>
+            <div class="message-bubble">
+              Pega o escribe algo en el editor y pregúntame por la derecha. Tomaré el contenido del editor como contexto principal.
+            </div>
+          </article>
+        </div>
+
+        <form id="chatForm" class="chat-composer">
+          <textarea id="chatInput" rows="3" placeholder="Pregunta algo sobre el contenido del editor..."></textarea>
+          <button id="sendBtn" type="submit">Preguntar</button>
+        </form>
+      </aside>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

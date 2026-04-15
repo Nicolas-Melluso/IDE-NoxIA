@@ -29,17 +29,7 @@ class APIClient:
 
         return self.base_delay_seconds * (2 ** attempt)
 
-    def generate(self, model: str, system_prompt: str, user_prompt: str, temperature: float, max_tokens: int) -> dict:
-        payload = {
-            "model": model,
-            "messages": [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
-            ],
-            "temperature": temperature,
-            "max_tokens": max_tokens,
-        }
-
+    def _post_messages(self, payload: dict) -> dict:
         total_start = time.perf_counter()
         for attempt in range(self.max_retries + 1):
             try:
@@ -78,3 +68,23 @@ class APIClient:
                     "latency_ms": round((time.perf_counter() - total_start) * 1000, 2),
                     "answer": str(exc)[:600],
                 }
+
+    def chat(self, model: str, messages: list[dict], temperature: float, max_tokens: int) -> dict:
+        payload = {
+            "model": model,
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+        }
+        return self._post_messages(payload)
+
+    def generate(self, model: str, system_prompt: str, user_prompt: str, temperature: float, max_tokens: int) -> dict:
+        return self.chat(
+            model=model,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )

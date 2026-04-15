@@ -1,31 +1,32 @@
-# text-generation-studio
+# IDE NoxIA
 
-Proyecto practico de la Leccion 6: construccion de aplicaciones de generacion de texto.
+Construyendo un IDE web
 
 ## Que hace
 
-Convierte prompts en una app usable por menu, con 4 casos reales:
+- Modo web: un editor tipo IDE a la izquierda y un chat LLM a la derecha.
 
-- Generador de recetas
-- Resumidor de texto
-- Generador de quiz
-- Reescritura por tono
+En la interfaz web, el usuario escribe codigo o texto en el editor y luego conversa con la IA para pedir explicaciones, refactors, mejoras o reescrituras usando ese contenido como contexto.
 
-Ademas guarda historial con metricas para que puedas comparar costo y rendimiento.
+Ademas guarda historial con metricas para comparar costo y rendimiento.
 
 ## Estructura
 
 - src/config.py: carga de entorno y parametros
-- src/client.py: cliente GitHub Models con retry y backoff
+- src/client.py: cliente GitHub Models con retry, backoff y soporte chat
+- src/server.py: servidor web local + API `/api/chat`
+- src/cli.py: flujo legado de consola
 - src/templates.py: plantillas de prompts por caso de uso
-- src/history.py: guardado de historial en CSV
-- src/main.py: app de consola principal
+- src/history.py: guardado de historial en CSV para consola y chat
+- src/main.py: arranque principal (web por defecto, CLI opcional)
+- web/: SPA tipo editor + chat
 - results/history.csv: historial de ejecuciones
+- results/chat_history.csv: historial de conversaciones web
 
 ## Setup
 
 ```bash
-cd '/c/Users/nicol/OneDrive/Documentos/Projects/ai-learning/text-generation-studio'
+cd 'IDE-NoxIA'
 python -m venv .venv
 source .venv/Scripts/activate
 pip install -r requirements.txt
@@ -39,23 +40,25 @@ GITHUB_TOKEN=github_pat_xxxxxxxxxxxxx
 MODEL=gpt-4o-mini
 TEMPERATURE=0.4
 MAX_TOKENS=350
-MAX_RETRIES=4
+MAX_RETRIES=3
 BASE_DELAY_SECONDS=0.5
+PORT=8000
 ```
 
-## Ejecutar
+## Ejecutar producto web
 
 ```bash
 python src/main.py
 ```
 
-## Que aprendes aqui (Leccion 6)
+Abre luego:
 
-- Como convertir prompts en una app real (no solo pruebas sueltas)
-- Como ajustar temperatura y max_tokens para cambiar resultados
-- Como estructurar prompts por caso de uso
-- Como instrumentar una app de texto con metricas y trazabilidad
+```text
+http://127.0.0.1:8000
+```
 
-## Siguiente paso sugerido
+## Ejecutar modo consola
 
-Agregar una SPA para visualizar `results/history.csv` con graficos de latencia, tokens y uso por modo.
+```bash
+python src/main.py --cli
+```

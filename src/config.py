@@ -11,6 +11,7 @@ class Config:
         self.max_tokens = int(os.getenv("MAX_TOKENS", "350"))
         self.max_retries = int(os.getenv("MAX_RETRIES", "4"))
         self.base_delay_seconds = float(os.getenv("BASE_DELAY_SECONDS", "0.5"))
+        self.port = int(os.getenv("PORT", "8000"))
         self._validate()
 
     def _validate(self) -> None:
